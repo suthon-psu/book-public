@@ -27,7 +27,7 @@ STEP 3:
 * Frontend
 - ปรับโค้ดเพื่อให้สามารถกรองรายการหนังสือจาก category ได้
 
-step 4:
+STEP 4:
 * Frontend
 - สร้าง BookForm สำหรับการใช้สำหรับการแสดงข้อมูลหนังสือ (ยังไม่ต้องมี callBackFn และโค้ดเกี่ยวกับ submit)
 - เติม callBackFn และส่วนทีเกี่ยวข้องกับการ submit
