@@ -17,7 +17,7 @@ STEP 2:
 - สร้าง api สำหรับการให้ข้อมูล book (โดยยังรองรับ nested object)
 - เพิ่มการรองรับ nested object
 * Forntend
-- สร้าง Category Repo ที่มีเพียง method เดียวคือ getAll โดยให้ mock ข้อมูลใน code 
+- สร้าง Book Repo ที่มีเพียง method เดียวคือ getAll โดยให้ mock ข้อมูลใน code 
 - สร้าง component BookDetial เพื่อใช้แสดงรายละเอียดหนังสือ
 - ใช้ compnent BookDetail ในการแสดงรายละเอียดหนังสือ จากเมธอด getAll ที่ mock ไว้
 - เติม Book Repo ให้มี method ครบทั้ง 5 method
