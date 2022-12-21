@@ -33,31 +33,29 @@ router
     const userResults = await query.orderBy('id', 'desc')
     ctx.body = userResults.map(it => nestObject(it, 'announcement'))
   })
-  .get('/:id', async (ctx, next) => {
+  .get('/:id/markAsViewed', async (ctx, next) => {
     const id = parseInt(ctx.params.id)
     const authData = ctx.state.authData as AuthData
-    let query = makeQuery().where({ 'userResult.userCode': authData.username })
-    const userResult = await query.where({ 'userResult.id': id, 'userResult.view_date_time': null }).first()
-    if (!userResult) {
+    const rowUpdated = await db('userResult')
+      .where({ id, 'userResult.userCode': authData.username })
+      .update({ view_date_time: new Date() })
+    if(rowUpdated == 0){
       ctx.response.status = 404
       return
     }
-
-    await db('userResult').where({ id }).update({ view_date_time: new Date() })
-    ctx.body = nestObject(await findById(id).first(), 'announcement')
+    ctx.body = {statusCode: 1}
   })
   .get('/:id/acknowledge', async (ctx, next) => {
     const id = parseInt(ctx.params.id)
     const authData = ctx.state.authData as AuthData
-    let query = makeQuery().where({ 'userResult.userCode': authData.username })
-    const userResult = await query.where({ 'userResult.id': id, 'userResult.ack_date_time': null }).first()
-    if (!userResult) {
+    const rowUpdated = await db('userResult')
+      .where({ id, 'userResult.userCode': authData.username })
+      .update({ ack_date_time: new Date() })
+    if(rowUpdated == 0){
       ctx.response.status = 404
       return
     }
-
-    await db('userResult').where({ id }).update({ ack_date_time: new Date() })
-    ctx.body = nestObject(await findById(id).first(), 'announcement')
+    ctx.body = {statusCode: 1}
   })
   .get('/:id/toggleIsPinned', async (ctx, next) => {
     const id = parseInt(ctx.params.id)
