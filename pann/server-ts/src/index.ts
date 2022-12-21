@@ -16,7 +16,7 @@ app.use(apiRouter.routes());
 
 (async () => {
   await loadFixtures(appConfig.clearDataBeforeLodingFixture)
-  await initSsoCert()
+  //await initSsoCert()
   app.listen(8000)
   console.log('Server is ready at port 8000')
 })();
