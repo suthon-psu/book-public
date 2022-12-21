@@ -33,7 +33,7 @@ router
     const userResults = await query.orderBy('id', 'desc')
     ctx.body = userResults.map(it => nestObject(it, 'announcement'))
   })
-  .get('/view/:id', async (ctx, next) => {
+  .get('/:id', async (ctx, next) => {
     const id = parseInt(ctx.params.id)
     const authData = ctx.state.authData as AuthData
     let query = makeQuery().where({ 'userResult.userCode': authData.username })
@@ -46,7 +46,7 @@ router
     await db('userResult').where({ id }).update({ view_date_time: new Date() })
     ctx.body = nestObject(await findById(id).first(), 'announcement')
   })
-  .get('/acknowledge/:id', async (ctx, next) => {
+  .get('/:id/acknowledge', async (ctx, next) => {
     const id = parseInt(ctx.params.id)
     const authData = ctx.state.authData as AuthData
     let query = makeQuery().where({ 'userResult.userCode': authData.username })
@@ -59,7 +59,7 @@ router
     await db('userResult').where({ id }).update({ ack_date_time: new Date() })
     ctx.body = nestObject(await findById(id).first(), 'announcement')
   })
-  .get('/toggleIsPinned/:id', async (ctx, next) => {
+  .get('/:id/toggleIsPinned', async (ctx, next) => {
     const id = parseInt(ctx.params.id)
     const authData = ctx.state.authData as AuthData
     let query = makeQuery().where({ 'userResult.userCode': authData.username })
@@ -72,38 +72,5 @@ router
     await db('userResult').where({ id }).update({ isPinned: userResult.isPinned ? false : true })
     ctx.body = nestObject(await findById(id).first(), 'announcement')
   })
-  // .get('/:id', async (ctx, next) => {
-  //   const id = parseInt(ctx.params.id)
-  //   const userResult = await findById(id).first()
-  //   if(!userResult){
-  //     ctx.response.status = 404
-  //     return
-  //   }
-  //   ctx.body = nestObject(userResult, 'announcement')
-  // })
-  // .post('/', async (ctx, next) => {    
-  //   let data = ctx.request.body
-  //   data = flattenId(data, 'announcement')
-  //   const id = (await db('userResult').insert(data))[0]
-  //   ctx.body = nestObject(await findById(id).first(), 'announcement')
-  // })
-  // .put('/:id', async (ctx, next) => {
-  //   const id = parseInt(ctx.params.id)
-  //   delete ctx.request.body.id
-  //   let data = ctx.request.body
-  //   data = flattenId(data, 'announcement')
-  //   const rowUpdated = await db('userResult').where({id}).update(data)
-  //   if(rowUpdated == 0){
-  //     ctx.response.status = 404
-  //     return
-  //   }
-  //   ctx.body = nestObject(await findById(id).first(), 'announcement')
-  // })
-  // .del('/:id', async (ctx, next) => {
-  //   const id = parseInt(ctx.params.id)
-  //   const rowUpdated = await findById(id).del()
-  //   ctx.body = {statusCode: rowUpdated > 0 ? 1 : 0}
-  // })
-
 
 export default router
